@@ -6,8 +6,10 @@ import cv2
 
 class YOLODetector():
     def __init__(self, config, weights):
-        self.threshold = 0.5
-        
+        self.objectness_threshold = 0.5
+        self.confidence_threshold = 0.5
+        self.nms_threshold = 0.4
+
         self._scale = 1/255.0
         self._input_size = (416, 416)
 
@@ -43,7 +45,7 @@ class YOLODetector():
             for detection in prediction:  # For each detection there is a vector: cx, cy, w, h, obectjness score + 80 classes
                 objectness = detection[4]
                 
-                if objectness > self.threshold:
+                if objectness > self.objectness_threshold:
                     scores = detection[5:]
 
                     class_id = np.argmax(scores)
@@ -58,7 +60,24 @@ class YOLODetector():
                     bbox = (center_x, center_y, width, height)
 
                     detections.append(Detection(class_id, confidence, bbox))
-        return detections
+            
+        detections_after_nms = self._apply_nms(detections, self.nms_threshold)
+        return detections_after_nms
+    
+    def _apply_nms(self, detections, nms_threshold):
+        # cv2.dnn.NMSBoxes expects (x, y, w, h) - convert from center format
+        bboxes = [(cx - w // 2, cy - h // 2, w, h) for (cx, cy, w, h) in (d.bbox for d in detections)]
+        
+        confidences = [d.confidence for d in detections]
+
+        indices = cv2.dnn.NMSBoxes(bboxes, confidences, self.threshold, nms_threshold)  # indices of filtered bbox
+
+        filtered_detections = []
+        if len(indices) > 0:
+            for i in indices.flatten():
+                filtered_detections.append(detections[i])
+
+        return filtered_detections
 
 @dataclass
 class Detection:

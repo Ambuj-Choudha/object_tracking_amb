@@ -25,7 +25,9 @@ if __name__ == "__main__":
     # read the input image
     img_path = os.path.join(PROJECT_ROOT, INPUT_FOLDER, FILE_NAME)
     img = cv2.imread(img_path)
-
+    if img is None:
+        raise FileNotFoundError(f"Could not read image at {img_path}")
+    
     # load trained model
     detector = YOLOv10Detector(MODEL_WEIGHTS)
 

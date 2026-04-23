@@ -24,3 +24,6 @@ notes/
 
 # official repo clone
 YOLOv10/yolov10/
+
+# ignore output images
+*.jpg

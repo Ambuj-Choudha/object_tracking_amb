@@ -41,3 +41,18 @@ def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
     out_h = np.maximum(0.0, y2 - y1)
 
     return np.stack([out_cx, out_cy, out_w, out_h], axis=1)
+
+def undo_letterbox_xyxy(boxes_xyxy, image_shape, ratio, dw, dh):
+    image_h, image_w = image_shape[:2]
+
+    x1 = (boxes_xyxy[:, 0] - dw) / ratio
+    y1 = (boxes_xyxy[:, 1] - dh) / ratio
+    x2 = (boxes_xyxy[:, 2] - dw) / ratio
+    y2 = (boxes_xyxy[:, 3] - dh) / ratio
+
+    x1 = np.clip(x1, 0, image_w - 1)
+    y1 = np.clip(y1, 0, image_h - 1)
+    x2 = np.clip(x2, 0, image_w - 1)
+    y2 = np.clip(y2, 0, image_h - 1)
+
+    return np.stack([x1, y1, x2, y2], axis=1)

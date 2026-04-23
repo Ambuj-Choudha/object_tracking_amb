@@ -4,6 +4,7 @@ This repo contains YOLOv10 wrapper using the standard pytorch model and the ONNX
 
 
 [model link for pretrained YOLOv10-m](https://huggingface.co/jameslahm/yolov10m)
+[[ONNX model link for YOLOv10-m]](https://huggingface.co/onnx-community/yolov10m/tree/main)
 
 ### Usage
 
@@ -15,10 +16,8 @@ uv venv --python 3.9 venv
 uv pip install -r requirements.txt
 `
 
-Clone the Yolov10 (fork not the official version as it has ONNX conversion script as well. And it cuts postprocessing during export) - CHECK WHY DO WE NEED TO CUT-OFF THE POST-PROCESSING STEP?!
-
 `bash
-git clone 
+git clone https://github.com/THU-MIG/yolov10.git
 `
 
 Install the repo as an editable package (basically add a pointer to the repo, in the local environment's site-packages folder)
@@ -39,9 +38,16 @@ python src\main.py
 
 ### Performance
 
+**Speed from .pt model**:
 Pre-processing time : 12.008 ms
 Inference time : 2283.040 ms
 Post-processing time : 33.775 ms
+
+**Speed from ONNX model**:
+Pre-processing time : 14.318 ms
+Inference time : 1357.630 ms
+Post-processing time : 2.294 ms
+
 
 ### References
 

@@ -3,6 +3,7 @@ import sys
 import cv2
 
 from detector import YOLOv10Detector
+from detector_onnx import YOLOv10DetectorONNX
 from utils.draw_detections import Visualizer
 
 
@@ -15,6 +16,8 @@ FILE_NAME = "horse.jpg"
 OUTPUT_FOLDER = "output"
 
 MODEL_WEIGHTS = "yolov10m.pt"
+ONNX_FOLDER = "onnx_model"
+ONNX_MODEL = os.path.join(BASE_DIR, ONNX_FOLDER, "yolov10m.onnx")
 
 DATASET_FOLDER = "dataset"
 DATASET_FILE = os.path.join(PROJECT_ROOT, DATASET_FOLDER, "coco.names")
@@ -30,7 +33,10 @@ if __name__ == "__main__":
     if img is None:
         raise FileNotFoundError(f"Could not read image at {img_path}")
     
-    detector = YOLOv10Detector(MODEL_WEIGHTS)
+    if ONNX:
+        detector = YOLOv10DetectorONNX(ONNX_MODEL)
+    else:
+        detector = YOLOv10Detector(MODEL_WEIGHTS)
 
     detections = detector.get_detections(img)
 

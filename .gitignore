@@ -1,0 +1,26 @@
+# ignore .vscode
+.vscode/
+
+# pycache folder
+__pycache__/
+*.pyc
+
+# environment folder
+env/
+
+# model weights
+yolov3.weights
+*.pt
+
+# input images folder
+input_images/
+
+# dataset and config related files
+model_config/
+dataset/
+
+# ignore notes folder
+notes/
+
+# official repo clone
+YOLOX/yolov10/

@@ -74,8 +74,8 @@ class YOLOv10DetectorONNX:
             raise ValueError(f"Expected >=6 columns, got shape {preds.shape}")
 
         scores = preds[:, 4]
-        keep = scores >= self.confidence_threshold
-        preds = preds[keep]
+        confidence_mask = scores >= self.confidence_threshold
+        preds = preds[confidence_mask]
 
         if preds.size == 0:
             return []

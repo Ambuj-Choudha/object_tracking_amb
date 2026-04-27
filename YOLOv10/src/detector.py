@@ -1,11 +1,6 @@
-from dataclasses import dataclass
+from detector_onnx import Detection
 from ultralytics import YOLOv10
 
-@dataclass
-class Detection:
-    class_id: int
-    confidence: float
-    bbox: tuple  # (cx, cy, w, h)
 
 class YOLOv10Detector:
     """

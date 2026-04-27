@@ -3,8 +3,7 @@ from typing import List, Tuple
 
 import numpy as np
 import onnxruntime as ort
-
-from preprocessing import preprocess_yolov10
+from preprocessing import letterbox
 from postprocessing import undo_letterbox_xyxy
 
 @dataclass
@@ -38,7 +37,18 @@ class YOLOv10DetectorONNX:
 
     def _preprocess(self, img: np.ndarray):
         """Returns ndarray [1,3,640,640], ratio, dw, dh"""
-        return preprocess_yolov10(img)
+        input_size = (640, 640)
+        padding_colour = (114, 114, 114)
+
+        img, ratio, (dw, dh) = letterbox(img, input_size,  # 1. Letterbox transformation
+                                        padding_colour)
+        img = img[:, :, ::-1]                              # 2. BGR to RGB
+        img = img.transpose(2, 0, 1)                       # 3. HWC to CHW
+        img = img.astype(np.float32) / 255.0               # 4. Normalize to [0, 1]
+
+        img = np.expand_dims(img, axis=0)                  # add batch dim → [1,3,H,W]
+
+        return img, ratio, dw, dh
 
     def _postprocess(
         self,

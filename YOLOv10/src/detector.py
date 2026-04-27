@@ -10,7 +10,7 @@ class YOLOv10Detector:
     - this class converts Results -> Detection dataclass
     """
 
-    def __init__(self, weights, confidence_threshold=0.5, iou_threshold=0.7):
+    def __init__(self, weights, confidence_threshold: float = None, iou_threshold: float = None):
         self.confidence_threshold = confidence_threshold
         self.iou_threshold = iou_threshold
         self.model = YOLOv10(weights)

@@ -6,7 +6,7 @@ from postprocessing import undo_letterbox_xyxy
 from typing import List, Tuple
 
 
-@dataclass
+@dataclass(frozen=True)
 class Detection:
     class_id: int
     confidence: float
@@ -14,7 +14,7 @@ class Detection:
 
 
 class YOLOv10DetectorONNX:
-    def __init__(self, onnx_model: str, confidence_threshold: float = 0.5) -> None:
+    def __init__(self, onnx_model: str, confidence_threshold: float = None) -> None:
         self.confidence_threshold = confidence_threshold
 
         available = ort.get_available_providers()

@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from typing import List, Tuple
-
 import numpy as np
 import onnxruntime as ort
 from preprocessing import apply_letterbox_transform
 from postprocessing import undo_letterbox_xyxy
+from typing import List, Tuple
+
 
 @dataclass
 class Detection:

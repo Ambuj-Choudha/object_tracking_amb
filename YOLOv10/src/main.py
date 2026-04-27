@@ -1,9 +1,7 @@
-import os
-import sys
 import cv2
-
 from detector import YOLOv10Detector
 from detector_onnx import YOLOv10DetectorONNX
+import os
 from utils.draw_detections import Visualizer
 
 

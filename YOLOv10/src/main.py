@@ -8,18 +8,17 @@ from utils.draw_detections import Visualizer
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(BASE_DIR))
 
-# Constants
 INPUT_FOLDER = "input_images"
 FILE_NAME = "horse.jpg"
 OUTPUT_FOLDER = "output"
 
-MODEL_WEIGHTS = "yolov10m.pt"
+PYTORCH_MODEL_WEIGHTS = "yolov10m.pt"
 ONNX_FOLDER = "onnx_model"
 ONNX_MODEL = os.path.join(BASE_DIR, ONNX_FOLDER, "yolov10m.onnx")
 
 DATASET_FOLDER = "dataset"
 DATASET_FILE = os.path.join(PROJECT_ROOT, DATASET_FOLDER, "coco.names")
-ONNX = True
+ONNX_INFERENCE = True
 
 if __name__ == "__main__":
 
@@ -31,10 +30,10 @@ if __name__ == "__main__":
     if img is None:
         raise FileNotFoundError(f"Could not read image at {img_path}")
     
-    if ONNX:
+    if ONNX_INFERENCE:
         detector = YOLOv10DetectorONNX(ONNX_MODEL)
     else:
-        detector = YOLOv10Detector(MODEL_WEIGHTS)
+        detector = YOLOv10Detector(PYTORCH_MODEL_WEIGHTS)
 
     detections = detector.get_detections(img)
 

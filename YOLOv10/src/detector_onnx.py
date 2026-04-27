@@ -67,10 +67,8 @@ class YOLOv10DetectorONNX:
             return []
 
         output0 = outputs[0]
-        try:
-            preds = output0[0]  # [B, N, 6]
-        except:
-            raise ValueError(f"Unexpected output rank: {output0.ndim}, shape={output0.shape}")
+        assert output0.ndim >= 2, f"Unexpected output rank: {output0.ndim}, shape={output0.shape}"
+        preds = output0[0]  # [N, 6]
 
         if preds.shape[1] < 6:
             raise ValueError(f"Expected >=6 columns, got shape {preds.shape}")

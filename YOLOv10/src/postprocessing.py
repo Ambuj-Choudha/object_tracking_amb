@@ -1,12 +1,13 @@
 import numpy as np
 
 
-# helper: map boxes from letterboxed image space back to original image space
 def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
     """
+    map boxes from letterboxed image space back to original image space
+
     boxes_xywh: np.ndarray, shape [N, 4], format (cx, cy, w, h) in letterboxed 640x640 space
     image_shape: original image shape, e.g. (H, W, C) or (H, W)
-    ratio, dw, dh: values returned by preprocess_yolov10/letterbox
+    ratio, dw, dh: values returned by apply_letterbox_transform
     returns: np.ndarray, shape [N, 4], format (cx, cy, w, h) in original image space (clipped)
     """
     image_height, image_width = image_shape[:2]

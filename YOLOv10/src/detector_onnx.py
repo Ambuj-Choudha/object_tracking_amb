@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import numpy as np
 import onnxruntime as ort
-from preprocessing import letterbox
+from preprocessing import apply_letterbox_transform
 from postprocessing import undo_letterbox_xyxy
 
 @dataclass
@@ -40,7 +40,7 @@ class YOLOv10DetectorONNX:
         input_size = (640, 640)
         padding_colour = (114, 114, 114)
 
-        img, ratio, (dw, dh) = letterbox(img, input_size,  # 1. Letterbox transformation
+        img, ratio, (dw, dh) = apply_letterbox_transform(img, input_size,  # 1. Letterbox transformation
                                         padding_colour)
         img = img[:, :, ::-1]                              # 2. BGR to RGB
         img = img.transpose(2, 0, 1)                       # 3. HWC to CHW

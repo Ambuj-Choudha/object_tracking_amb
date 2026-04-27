@@ -1,8 +1,6 @@
 import cv2
-import numpy as np
 
-
-def letterbox(img, new_shape, padding_colour):
+def apply_letterbox_transform(img, new_shape, padding_colour):
     """maintains aspect ratio by scaling down + adding padding"""
     
     shape = img.shape[:2]

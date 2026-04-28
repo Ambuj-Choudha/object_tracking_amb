@@ -1,10 +1,8 @@
 ## YOLO v10
 
-This repo contains YOLOv10 wrapper using the standard pytorch model and the ONNX model.
+This repo contains YOLOv10 wrapper using ONNX model under the hood.
 
-
-[model link for pretrained YOLOv10-m](https://huggingface.co/jameslahm/yolov10m)
-[[ONNX model link for YOLOv10-m]](https://huggingface.co/onnx-community/yolov10m/tree/main)
+[ONNX model for YOLOv10-m](https://huggingface.co/onnx-community/yolov10m/tree/main)
 
 ### Usage
 
@@ -23,24 +21,19 @@ python src\main.py --input-image horse.jpg
 `
 
 ### Model Output
+#### Input Image
+<img src="../docs/horse.jpg" alt="Input Image" width="600">
 
-<img src="docs/horse.jpg" alt="Input Image" width="600">
-
-<img src="docs/horse_detections.jpg" alt="Detection result" width="600">
+#### Detection Result
+<img src="../docs/horse_detections.jpg" alt="Detection result" width="600">
 
 ### Performance
-
-**Speed from .pt model**:  
-Pre-processing time : 12.008 ms <br>
-Inference time : 2283.040 ms <br>
-Post-processing time : 33.775 ms <br>
-
-**Speed from ONNX model**:  
-Pre-processing time : 14.318 ms <br>
-Inference time : 1357.630 ms <br>
-Post-processing time : 2.294 ms <br>
+ 
+- Pre-processing time : 14.318 ms <br>
+- Inference time : 1357.630 ms <br>
+- Post-processing time : 2.294 ms <br>
 
 
 ### References
 
-I followed this [tutorial](https://docs.opencv.org/4.x/da/d9d/tutorial_dnn_yolo.html) from openCV
+This [tutorial](https://docs.opencv.org/4.x/da/d9d/tutorial_dnn_yolo.html) from openCV is quite helpful

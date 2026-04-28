@@ -15,12 +15,15 @@ yolov3.weights
 # input images folder
 input_images/
 
-# dataset and config related files
-model_config/
+# dataset related files
 dataset/
+ONNX_model/
 
 # ignore notes folder
 notes/
 
 # official repo clone
-YOLOX/yolov10/
+YOLOv10/yolov10/
+
+# ignore output images
+*.jpg

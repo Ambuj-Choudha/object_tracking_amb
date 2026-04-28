@@ -1,8 +1,6 @@
 import cv2
-import numpy as np
 
-
-def letterbox(img, new_shape, padding_colour):
+def apply_letterbox_transform(img, new_shape, padding_colour):
     """maintains aspect ratio by scaling down + adding padding"""
     
     shape = img.shape[:2]
@@ -24,21 +22,3 @@ def letterbox(img, new_shape, padding_colour):
     img = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=padding_colour)
 
     return img, ratio, (dw, dh)
-
-def preprocess_yolov10(img):
-    """
-    Standard YOLOv10 preprocessing.
-    Reference: ultralytics/engine/predictor.py
-    """
-    input_size = (640, 640)
-    padding_colour = (114, 114, 114)
-
-    img, ratio, (dw, dh) = letterbox(img, input_size,  # 1. Letterbox transformation
-                                    padding_colour)   
-    img = img[:, :, ::-1]                              # 2. BGR to RGB 
-    img = img.transpose(2, 0, 1)                       # 3. HWC to CHW
-    img = img.astype(np.float32) / 255.0               # 4. Normalize to [0, 1]
-    
-    img = np.expand_dims(img, axis=0)                  # add batch dim → [1,3,H,W]
-    
-    return img, ratio, dw, dh

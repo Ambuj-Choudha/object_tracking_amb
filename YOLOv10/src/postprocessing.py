@@ -1,12 +1,13 @@
 import numpy as np
 
 
-# helper: map boxes from letterboxed image space back to original image space
 def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
     """
+    map boxes from letterboxed image space back to original image space
+
     boxes_xywh: np.ndarray, shape [N, 4], format (cx, cy, w, h) in letterboxed 640x640 space
     image_shape: original image shape, e.g. (H, W, C) or (H, W)
-    ratio, dw, dh: values returned by preprocess_yolov10/letterbox
+    ratio, dw, dh: values returned by apply_letterbox_transform
     returns: np.ndarray, shape [N, 4], format (cx, cy, w, h) in original image space (clipped)
     """
     image_height, image_width = image_shape[:2]
@@ -41,3 +42,18 @@ def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
     out_h = np.maximum(0.0, y2 - y1)
 
     return np.stack([out_cx, out_cy, out_w, out_h], axis=1)
+
+def undo_letterbox_xyxy(boxes_xyxy, image_shape, ratio, dw, dh):
+    image_h, image_w = image_shape[:2]
+
+    x1 = (boxes_xyxy[:, 0] - dw) / ratio
+    y1 = (boxes_xyxy[:, 1] - dh) / ratio
+    x2 = (boxes_xyxy[:, 2] - dw) / ratio
+    y2 = (boxes_xyxy[:, 3] - dh) / ratio
+
+    x1 = np.clip(x1, 0, image_w - 1)
+    y1 = np.clip(y1, 0, image_h - 1)
+    x2 = np.clip(x2, 0, image_w - 1)
+    y2 = np.clip(y2, 0, image_h - 1)
+
+    return np.stack([x1, y1, x2, y2], axis=1)

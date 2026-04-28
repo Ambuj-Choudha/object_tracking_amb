@@ -16,25 +16,17 @@ uv venv --python 3.9 venv
 uv pip install -r requirements.txt
 `
 
-`
-git clone https://github.com/THU-MIG/yolov10.git
-`
-
-Install the repo as an editable package (basically add a pointer to the repo, in the local environment's site-packages folder)
-`
-cd yolov10
-`
-
-`
-pip install -e .
-`
-
 Asumming you are in YOLOv10\ directory:
 
 `
-python src\main.py --input-image horse.jpg --onnx-inference
+python src\main.py --input-image horse.jpg
 `
 
+### Model Output
+
+<img src="docs/horse.jpg" alt="Input Image" width="600">
+
+<img src="docs/horse_detections.jpg" alt="Detection result" width="600">
 
 ### Performance
 

@@ -1,19 +1,13 @@
-from dataclasses import dataclass
+from object_tracker.detectors.base import DetectorBase
+from object_tracker.io_transforms.preprocessing import apply_letterbox_transform
+from object_tracker.io_transforms.postprocessing import undo_letterbox_xyxy
 import numpy as np
 import onnxruntime as ort
-from preprocessing import apply_letterbox_transform
-from postprocessing import undo_letterbox_xyxy
+from object_tracker.types import Detection
 from typing import List, Tuple
 
 
-@dataclass(frozen=True)
-class Detection:
-    class_id: int
-    confidence: float
-    bbox: Tuple[float, float, float, float]  # (cx, cy, w, h)
-
-
-class YOLOv10DetectorONNX:
+class YOLOv10DetectorONNX(DetectorBase):
     def __init__(self, onnx_model: str, confidence_threshold: float = None) -> None:
         self.confidence_threshold = confidence_threshold
 

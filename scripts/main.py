@@ -1,26 +1,25 @@
 import argparse
 import cv2
-import config
-from detector_onnx import YOLOv10DetectorONNX
+import object_tracker.config
+from object_tracker.detectors.yolov10 import YOLOv10DetectorONNX
 import os
-from utils.draw_detections import Visualizer
+from object_tracker.visualization.draw_detections import Visualizer
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input-image",    required=True,                  help="Input image filename (inside INPUT_FOLDER/)")
-    parser.add_argument("--output-folder",  default=config.OUTPUT_FOLDER,   help="Folder to save results")
+    parser.add_argument("--input-image",    required=True,                  help="Input image filename (inside DATA/INPUT/)")
+    parser.add_argument("--output-folder",  default=object_tracker.config.OUTPUT_FOLDER,   help="Folder to save results")
     args = parser.parse_args()
 
-
-    with open(config.DATASET_FILE, 'r') as file: 
+    with open(object_tracker.config.DATASET_FILE, 'r') as file: 
         class_names = file.read().splitlines()
     
-    img_path = os.path.join(config.INPUT_FOLDER, args.input_image)
+    img_path = os.path.join(object_tracker.config.INPUT_FOLDER, args.input_image)
     img = cv2.imread(img_path)
     if img is None:
         raise FileNotFoundError(f"Could not read image at {img_path}")
     
-    detector = YOLOv10DetectorONNX(config.ONNX_MODEL, config.CONFIDENCE_THRESHOLD)
+    detector = YOLOv10DetectorONNX(object_tracker.config.ONNX_MODEL, object_tracker.config.CONFIDENCE_THRESHOLD)
 
     detections = detector.get_detections(img)
 

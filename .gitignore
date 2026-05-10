@@ -8,22 +8,11 @@ __pycache__/
 # environment folder
 env/
 
-# model weights
-yolov3.weights
-*.pt
+# package files
+object_tracker_amb.egg-info/
 
-# input images folder
-input_images/
-
-# dataset related files
-dataset/
-ONNX_model/
-
-# ignore notes folder
-notes/
-
-# official repo clone
-YOLOv10/yolov10/
-
-# ignore output images
+# input & output images folder
 *.jpg
+
+# model files
+*.onnx

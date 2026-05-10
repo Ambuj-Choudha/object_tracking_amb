@@ -1,30 +1,43 @@
-## Real-time Object Detection Project
+## YOLO v10
 
-Object detector wrapper using YOLO models under the hood.
+This repo contains YOLOv10 wrapper using ONNX model under the hood.
 
-### TODOs
+[ONNX model for YOLOv10-m](https://huggingface.co/onnx-community/yolov10m/tree/main)
 
-1. Complete the project
-- [x] Implement Non-Maximum Suppression (NMS)
-- [x] Segregate logic into different files
-- [x] Update model to recent version of YOLO (v10 or RF-DETR)
-- [x] Use ONNX model for performance boost
+### Usage
 
-2. Clean up, and production-grade working prototype
-- [ ] Remove magic numbers
-- [ ] Add a config file
-- [ ] Add links to the model and dataset files in README
-- [ ] Add type hints and neccesary doc strings
+`
+uv venv --python 3.9 venv
+`
 
-3. Reproducibility
-- [ ] Create Docker for easy reproducibility
+Asumming you are in object_tracker_amb\ directory:
 
-4. Optimization
-- [ ] Optimizations for deployment
-    - [ ] Pruning
-    - [ ] Other optimizations
+Add the link to the project module by installing it in the editable mode:
 
-5. Furthur performance boost
-- [ ] Write equivalent C++ code
+`
+uv pip install -e .
+`
 
-6. Audit and Improvements
+After that run the main script using the following command:
+
+`
+python -m scripts.main --input-image horse.jpg
+`
+
+### Model Output
+#### Input Image
+<img src="docs/horse.jpg" alt="Input Image" width="600">
+
+#### Detection Result
+<img src="docs/horse_detections.jpg" alt="Detection result" width="600">
+
+### Performance
+ 
+- Pre-processing time : 14.318 ms <br>
+- Inference time : 1357.630 ms <br>
+- Post-processing time : 2.294 ms <br>
+
+
+### References
+
+This [tutorial](https://docs.opencv.org/4.x/da/d9d/tutorial_dnn_yolo.html) from openCV is quite helpful

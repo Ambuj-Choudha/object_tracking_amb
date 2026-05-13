@@ -13,12 +13,12 @@ class Visualizer():
         self.font_scale = 0.5
 
     # interface for the user
-    def draw_detections(self, img, detections):
+    def draw_detections(self, img, detections) -> None:
         for detection in detections:
             self._draw_bbox_w_labels(img, detection)
 
     # private methods
-    def _draw_bbox_w_labels(self, img, detection):
+    def _draw_bbox_w_labels(self, img, detection) -> None:
         colour = self.colour_map[detection.class_id]
         cx, cy, w, h = detection.bbox
         img_h, img_w = img.shape[:2]
@@ -60,7 +60,6 @@ class Visualizer():
                     thickness=self.text_thickness, color=self.text_colour, lineType=cv2.LINE_AA, bottomLeftOrigin=False)
 
     @staticmethod
-    def _generate_colours(n):
+    def _generate_colours(n) -> list[tuple[int, int, int]]:
         np.random.seed(42)  # deterministic colours across runs
-        return [tuple(int(c) for c in colour) 
-                for colour in np.random.randint(0, 255, (n, 3))]
+        return [tuple(int(c) for c in colour) for colour in np.random.randint(0, 255, (n, 3))]

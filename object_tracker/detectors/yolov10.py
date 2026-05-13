@@ -4,7 +4,6 @@ from object_tracker.io_transforms.postprocessing import undo_letterbox_xyxy
 import numpy as np
 import onnxruntime as ort
 from object_tracker.types import Detection
-from typing import List, Tuple
 
 
 class YOLOv10DetectorONNX(DetectorBase):
@@ -21,7 +20,7 @@ class YOLOv10DetectorONNX(DetectorBase):
         self.session = ort.InferenceSession(onnx_model, providers=providers)
         self.input_name = self.session.get_inputs()[0].name
 
-    def get_detections(self, img: np.ndarray) -> List[Detection]:
+    def get_detections(self, img: np.ndarray) -> list[Detection]:
         processed_img, ratio, dw, dh = self._preprocess(img)
         raw_outputs = self._predict(processed_img)
         return self._postprocess(raw_outputs, img.shape, ratio, dw, dh)
@@ -29,7 +28,7 @@ class YOLOv10DetectorONNX(DetectorBase):
     def _predict(self, processed_img: np.ndarray) -> list[np.ndarray]:
         return self.session.run(None, {self.input_name: processed_img})
 
-    def _preprocess(self, img: np.ndarray):
+    def _preprocess(self, img: np.ndarray) -> tuple[np.ndarray, float, float, float]:
         """Returns ndarray [1,3,640,640], ratio, dw, dh"""
         input_size = (640, 640)
         padding_colour = (114, 114, 114)
@@ -47,11 +46,11 @@ class YOLOv10DetectorONNX(DetectorBase):
     def _postprocess(
         self,
         outputs: list[np.ndarray],
-        img_shape: Tuple[int, ...],
+        img_shape: tuple[int, ...],
         ratio: float,
         dw: float,
         dh: float,
-    ) -> List[Detection]:
+    ) -> list[Detection]:
         """
         Hugging Face onnx-community/yolov10m output format:
         output0 -> [B, N, 6] where each row is

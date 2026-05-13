@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
+def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh) -> np.ndarray:
     """
     map boxes from letterboxed image space back to original image space
 
@@ -43,7 +43,7 @@ def undo_letterbox_xywh(boxes_xywh, image_shape, ratio, dw, dh):
 
     return np.stack([out_cx, out_cy, out_w, out_h], axis=1)
 
-def undo_letterbox_xyxy(boxes_xyxy, image_shape, ratio, dw, dh):
+def undo_letterbox_xyxy(boxes_xyxy, image_shape, ratio, dw, dh) -> np.ndarray:
     image_h, image_w = image_shape[:2]
 
     x1 = (boxes_xyxy[:, 0] - dw) / ratio

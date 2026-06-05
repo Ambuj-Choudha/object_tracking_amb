@@ -5,7 +5,7 @@ from object_tracker.detectors.yolov10 import YOLOv10DetectorONNX
 import os
 from object_tracker.visualization.draw_detections import Visualizer
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-image",    required=True,                  help="Input image filename (inside DATA/INPUT/)")
     parser.add_argument("--output-folder",  default=object_tracker.config.OUTPUT_FOLDER,   help="Folder to save results")
@@ -32,3 +32,7 @@ if __name__ == "__main__":
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     cv2.imwrite(output_path, img)
     print(f"Detection results saved to {output_path}")
+
+
+if __name__ == "__main__":
+    main()

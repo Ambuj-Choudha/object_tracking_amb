@@ -31,7 +31,7 @@ dev = [
 ]
 
 [project.scripts]
-detect = "object_tracker.scripts:main"
+detect = "object_tracker.detect:main"
 
 [tool.setuptools]
 packages = ["object_tracker"]

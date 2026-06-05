@@ -4,25 +4,32 @@ This repo contains YOLOv10 wrapper using ONNX model under the hood.
 
 [ONNX model for YOLOv10-m](https://huggingface.co/onnx-community/yolov10m/tree/main)
 
+### Setup
+
+Requirements: [uv](https://docs.astral.sh/uv/)
+
+```bash
+uv sync
+```
+
+This installs all dependencies from `uv.lock` and creates a `.venv` automatically.
+
 ### Usage
 
-`
-uv venv --python 3.9 venv
-`
+Assuming you are in the `object_tracker_amb/` directory:
 
-Asumming you are in object_tracker_amb\ directory:
+```bash
+uv run python -m scripts.main --input-image horse.jpg
+```
 
-Add the link to the project module by installing it in the editable mode:
+Or activate the virtual environment and run directly:
 
-`
-uv pip install -e .
-`
+```bash
+source .venv/bin/activate   # Linux/macOS
+.venv\Scripts\activate      # Windows
 
-After that run the main script using the following command:
-
-`
 python -m scripts.main --input-image horse.jpg
-`
+```
 
 ### Model Output
 #### Input Image
@@ -32,11 +39,10 @@ python -m scripts.main --input-image horse.jpg
 <img src="docs/horse_detections.jpg" alt="Detection result" width="600">
 
 ### Performance
- 
-- Pre-processing time : 14.318 ms <br>
-- Inference time : 1357.630 ms <br>
-- Post-processing time : 2.294 ms <br>
 
+- Pre-processing time : 14.318 ms
+- Inference time : 1357.630 ms
+- Post-processing time : 2.294 ms
 
 ### References
 

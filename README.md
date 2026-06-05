@@ -6,7 +6,7 @@ This repo contains YOLOv10 wrapper using ONNX model under the hood.
 
 ### Setup
 
-Requirements: [uv](https://docs.astral.sh/uv/)
+Requirements: [uv](https://docs.astral.sh/uv/) · Python 3.10+
 
 ```bash
 uv sync
@@ -16,10 +16,10 @@ This installs all dependencies from `uv.lock` and creates a `.venv` automaticall
 
 ### Usage
 
-Assuming you are in the `object_tracker_amb/` directory:
+After `uv sync`, a `detect` command is available in the environment:
 
 ```bash
-uv run python -m scripts.main --input-image horse.jpg
+uv run detect --input-image horse.jpg
 ```
 
 Or activate the virtual environment and run directly:
@@ -28,7 +28,23 @@ Or activate the virtual environment and run directly:
 source .venv/bin/activate   # Linux/macOS
 .venv\Scripts\activate      # Windows
 
-python -m scripts.main --input-image horse.jpg
+detect --input-image horse.jpg
+```
+
+By default the command reads from the configured input folder and writes results next to the input file with a `_detections` suffix.
+
+### Development
+
+Install dev dependencies (pytest, mypy, ruff):
+
+```bash
+uv sync --extra dev
+```
+
+Run tests:
+
+```bash
+uv run pytest
 ```
 
 ### Model Output

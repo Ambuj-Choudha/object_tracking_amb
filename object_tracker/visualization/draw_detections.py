@@ -62,4 +62,4 @@ class Visualizer():
     @staticmethod
     def _generate_colours(n) -> list[tuple[int, int, int]]:
         np.random.seed(42)  # deterministic colours across runs
-        return [tuple(int(c) for c in colour) for colour in np.random.randint(0, 255, (n, 3))]
+        return [(int(r), int(g), int(b)) for r, g, b in np.random.randint(0, 255, (n, 3))]

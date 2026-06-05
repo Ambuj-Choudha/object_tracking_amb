@@ -2,12 +2,12 @@ from object_tracker.detectors.base import DetectorBase
 from object_tracker.io_transforms.preprocessing import apply_letterbox_transform
 from object_tracker.io_transforms.postprocessing import undo_letterbox_xyxy
 import numpy as np
-import onnxruntime as ort
+import onnxruntime as ort  # type: ignore[import-untyped]
 from object_tracker.types import Detection
 
 
 class YOLOv10DetectorONNX(DetectorBase):
-    def __init__(self, onnx_model: str, confidence_threshold: float = None) -> None:
+    def __init__(self, onnx_model: str, confidence_threshold: float | None = None) -> None:
         self.confidence_threshold = confidence_threshold
 
         available = ort.get_available_providers()
@@ -26,7 +26,7 @@ class YOLOv10DetectorONNX(DetectorBase):
         return self._postprocess(raw_outputs, img.shape, ratio, dw, dh)
 
     def _predict(self, processed_img: np.ndarray) -> list[np.ndarray]:
-        return self.session.run(None, {self.input_name: processed_img})
+        return self.session.run(None, {self.input_name: processed_img})  # type: ignore[no-any-return]
 
     def _preprocess(self, img: np.ndarray) -> tuple[np.ndarray, float, float, float]:
         """Returns ndarray [1,3,640,640], ratio, dw, dh"""

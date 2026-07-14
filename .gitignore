@@ -16,3 +16,6 @@ object_tracker_amb.egg-info/
 
 # model files
 *.onnx
+
+# ignore notes folder
+notes/

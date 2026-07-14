@@ -55,6 +55,7 @@ class YOLOv10DetectorONNX(DetectorBase):
         Hugging Face onnx-community/yolov10m output format:
         output0 -> [B, N, 6] where each row is
         [xmin, ymin, xmax, ymax, score, class_id]
+        ref: https://github.com/Abdurrahheem/yolov10/commit/aad320dd80b56694e590c950b25060a134966496
         """
         if not outputs:
             return []

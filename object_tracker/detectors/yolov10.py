@@ -90,16 +90,11 @@ class YOLOv10DetectorONNX(DetectorBase):
 
         for box, cls_id, conf in zip(boxes_xyxy_orig, class_ids, confidences):
             x1, y1, x2, y2 = box.tolist()
-            w = max(0.0, x2 - x1)
-            h = max(0.0, y2 - y1)
-            cx = x1 + w / 2.0
-            cy = y1 + h / 2.0
-
             detections.append(
                 Detection(
                     class_id=int(cls_id),
                     confidence=float(conf),
-                    bbox=(float(cx), float(cy), float(w), float(h)),
+                    bbox=(float(x1), float(y1), float(x2), float(y2)),
                 )
             )
 

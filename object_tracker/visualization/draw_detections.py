@@ -1,9 +1,12 @@
-import numpy as np
 import cv2
+import numpy as np
+
+from object_tracker.types import Detection
 
 
-class Visualizer():
-    def __init__(self, class_names, colour_map=None, text_colour=(0, 0, 0), thickness=2):
+class Visualizer:
+    def __init__(self, class_names: list[str], colour_map: list[tuple[int, int, int]] | None = None, 
+                 text_colour: tuple[int, int, int] = (0, 0, 0), thickness: int = 2,) -> None:
         self.class_names = class_names
         self.thickness = thickness
         self.text_thickness = max(1, self.thickness // 2)
@@ -13,20 +16,20 @@ class Visualizer():
         self.font_scale = 0.5
 
     # interface for the user
-    def draw_detections(self, img, detections) -> None:
+    def draw_detections(self, img: np.ndarray, detections: list[Detection]) -> None:
         for detection in detections:
             self._draw_bbox_w_labels(img, detection)
 
     # private methods
-    def _draw_bbox_w_labels(self, img, detection) -> None:
+    def _draw_bbox_w_labels(self, img: np.ndarray, detection: Detection) -> None:
         colour = self.colour_map[detection.class_id]
-        cx, cy, w, h = detection.bbox
+        x1_f, y1_f, x2_f, y2_f = detection.bbox
         img_h, img_w = img.shape[:2]
 
-        x1 = max(0, min(int(round(cx - w / 2)), img_w - 1))
-        y1 = max(0, min(int(round(cy - h / 2)), img_h - 1))
-        x2 = max(0, min(int(round(cx + w / 2)), img_w - 1))
-        y2 = max(0, min(int(round(cy + h / 2)), img_h - 1))
+        x1 = max(0, min(int(round(x1_f)), img_w - 1))
+        y1 = max(0, min(int(round(y1_f)), img_h - 1))
+        x2 = max(0, min(int(round(x2_f)), img_w - 1))
+        y2 = max(0, min(int(round(y2_f)), img_h - 1))
 
         # Draw bounding box
         cv2.rectangle(img, (x1, y1), (x2, y2), colour, self.thickness)
@@ -35,7 +38,7 @@ class Visualizer():
         label = f"{self.class_names[detection.class_id]}: {detection.confidence:.2f}"
         pad = 4
 
-        (label_width, label_height), baseline = cv2.getTextSize(label, self.font, fontScale=self.font_scale, 
+        (label_width, label_height), baseline = cv2.getTextSize(label, self.font, fontScale=self.font_scale,
                                                                 thickness=self.text_thickness)
 
         # Calculate the position of the label text
@@ -54,12 +57,12 @@ class Visualizer():
 
         # Draw a filled rectangle as the background for the label text
         cv2.rectangle(img, (bg_x1, bg_y1), (bg_x2, bg_y2), colour, cv2.FILLED)
-        
+
         # Put the label text on the image
-        cv2.putText(img, label, (text_x, text_y), fontFace=self.font, fontScale=self.font_scale, 
+        cv2.putText(img, label, (text_x, text_y), fontFace=self.font, fontScale=self.font_scale,
                     thickness=self.text_thickness, color=self.text_colour, lineType=cv2.LINE_AA, bottomLeftOrigin=False)
 
     @staticmethod
-    def _generate_colours(n) -> list[tuple[int, int, int]]:
+    def _generate_colours(n: int) -> list[tuple[int, int, int]]:
         np.random.seed(42)  # deterministic colours across runs
         return [(int(r), int(g), int(b)) for r, g, b in np.random.randint(0, 255, (n, 3))]

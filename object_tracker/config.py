@@ -9,7 +9,7 @@ ONNX_MODEL = os.path.join(PROJECT_ROOT, "assets", "models", "yolov10m.onnx")
 
 # Detection
 CONFIDENCE_THRESHOLD = 0.5
-NMS_IOU_THRESHOLD = 0.7
+# NMS_IOU_THRESHOLD = 0.7  # not needed anymore YOLOv10 is nms-free
 
 # Dataset
 DATASET_FILE = os.path.join(PROJECT_ROOT, "assets", "labels", "coco.names")

@@ -7,9 +7,9 @@ name = "object-tracker-amb"
 version = "0.1.0"
 description = "Object detection and tracking using YOLOv10 ONNX"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "Ambuj Choudha", email = "ambuj.choudha@rwth-aachen.de"},
 ]
 license = {text = "MIT"}
 
@@ -17,9 +17,10 @@ dependencies = [
     "numpy>=1.24.0",
     "opencv-python>=4.8.0",
     "onnxruntime>=1.15.0",
-    "ultralytics>=8.1.0",
-    "pillow>=10.0.0",
 ]
+
+[project.urls]
+Repository = "https://github.com/Ambuj-Choudha/object_tracking_amb"
 
 [project.optional-dependencies]
 dev = [
@@ -30,7 +31,7 @@ dev = [
 ]
 
 [project.scripts]
-detect = "object_tracker.scripts.detect:main"
+detect = "object_tracker.detect:main"
 
 [tool.setuptools]
 packages = ["object_tracker"]
@@ -41,17 +42,17 @@ object_tracker = ["py.typed"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
-addopts = "--cov=object_tracker --cov-report=html"
+addopts = "--cov=object_tracker --cov-report=html --cov-report=term-missing"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]

@@ -4,25 +4,48 @@ This repo contains YOLOv10 wrapper using ONNX model under the hood.
 
 [ONNX model for YOLOv10-m](https://huggingface.co/onnx-community/yolov10m/tree/main)
 
+### Setup
+
+Requirements: [uv](https://docs.astral.sh/uv/) · Python 3.10+
+
+```bash
+uv sync
+```
+
+This installs all dependencies from `uv.lock` and creates a `.venv` automatically.
+
 ### Usage
 
-`
-uv venv --python 3.9 venv
-`
+After `uv sync`, a `detect` command is available in the environment:
 
-Asumming you are in object_tracker_amb\ directory:
+```bash
+uv run detect --input-image horse.jpg
+```
 
-Add the link to the project module by installing it in the editable mode:
+Or activate the virtual environment and run directly:
 
-`
-uv pip install -e .
-`
+```bash
+source .venv/bin/activate   # Linux/macOS
+.venv\Scripts\activate      # Windows
 
-After that run the main script using the following command:
+detect --input-image horse.jpg
+```
 
-`
-python -m scripts.main --input-image horse.jpg
-`
+By default the command reads from the configured input folder and writes results in the data/output folder with a `_detections` suffix.
+
+### Development
+
+Install dev dependencies (pytest, mypy, ruff):
+
+```bash
+uv sync --extra dev
+```
+
+Run tests:
+
+```bash
+uv run pytest
+```
 
 ### Model Output
 #### Input Image
@@ -32,11 +55,21 @@ python -m scripts.main --input-image horse.jpg
 <img src="docs/horse_detections.jpg" alt="Detection result" width="600">
 
 ### Performance
- 
-- Pre-processing time : 14.318 ms <br>
-- Inference time : 1357.630 ms <br>
-- Post-processing time : 2.294 ms <br>
 
+- Pre-processing time : 14.318 ms
+- Inference time : 1357.630 ms
+- Post-processing time : 2.294 ms
+
+### TODOs
+
+
+- [ ] add batch processing for multiple images
+- [ ] add functionality for video file as input
+- [ ] add per-class confidence thresholds (and `--confidence` CLI override)
+- [ ] add JSON export of detections (`--output-json`)
+- [ ] support arbitrary input paths and `--input-dir` for folder input
+- [ ] add model auto-download helper (avoids manual HF step)
+- [ ] add a Tracker to the project
 
 ### References
 

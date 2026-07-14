@@ -33,7 +33,6 @@ class TestPostprocess:
     def test_single_detection_coordinate_transform(self, detector):
         # 640x480 original, letterboxed with ratio=1.0, dh=80.
         # Box [100,180,300,380] in letterbox -> [100,100,300,300] original (xyxy)
-        # cxcywh: cx=200, cy=200, w=200, h=200
         outputs = _raw_output([100, 180, 300, 380, 0.9, 2])
         result = detector._postprocess(outputs, (480, 640, 3), 1.0, 0.0, 80.0)
 
@@ -41,11 +40,11 @@ class TestPostprocess:
         d = result[0]
         assert d.class_id == 2
         assert d.confidence == pytest.approx(0.9)
-        cx, cy, w, h = d.bbox
-        assert cx == pytest.approx(200.0)
-        assert cy == pytest.approx(200.0)
-        assert w == pytest.approx(200.0)
-        assert h == pytest.approx(200.0)
+        x1, y1, x2, y2 = d.bbox
+        assert x1 == pytest.approx(100.0)
+        assert y1 == pytest.approx(100.0)
+        assert x2 == pytest.approx(300.0)
+        assert y2 == pytest.approx(300.0)
 
     def test_confidence_threshold_filters_rows(self, detector):
         outputs = _raw_output(
@@ -68,15 +67,15 @@ class TestPostprocess:
         assert isinstance(d.confidence, float)
         assert len(d.bbox) == 4
 
-    def test_degenerate_zero_area_box_clamps_wh_to_zero(self, detector):
-        # A point box (x1==x2, y1==y2) must produce w=0, h=0, not negative
+    def test_degenerate_zero_area_box_preserved(self, detector):
+        # A point box (x1==x2, y1==y2) must round-trip with zero area
         outputs = _raw_output([100, 100, 100, 100, 0.9, 0])
         result = detector._postprocess(outputs, (480, 640, 3), 1.0, 0.0, 0.0)
 
         assert len(result) == 1
-        _, _, w, h = result[0].bbox
-        assert w >= 0.0
-        assert h >= 0.0
+        x1, y1, x2, y2 = result[0].bbox
+        assert x2 - x1 == pytest.approx(0.0)
+        assert y2 - y1 == pytest.approx(0.0)
 
     def test_wrong_column_count_raises_value_error(self, detector):
         bad = [np.zeros((1, 5, 5), dtype=np.float32)]

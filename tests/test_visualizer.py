@@ -18,7 +18,7 @@ def viz() -> Visualizer:
 
 class TestVisualizerSmoke:
     def test_draw_single_detection_modifies_image(self, viz, blank_image):
-        det = Detection(class_id=0, confidence=0.85, bbox=(150.0, 100.0, 80.0, 60.0))
+        det = Detection(class_id=0, confidence=0.85, bbox=(110.0, 70.0, 190.0, 130.0))
         before = blank_image.copy()
         viz.draw_detections(blank_image, [det])
         assert not np.array_equal(blank_image, before), "image should be modified after drawing"
@@ -30,13 +30,13 @@ class TestVisualizerSmoke:
 
     def test_label_near_top_edge_does_not_raise(self, viz, blank_image):
         # y coordinate near 0 forces label to be drawn below the box
-        det = Detection(class_id=1, confidence=0.5, bbox=(150.0, 5.0, 40.0, 8.0))
+        det = Detection(class_id=1, confidence=0.5, bbox=(130.0, 1.0, 170.0, 9.0))
         viz.draw_detections(blank_image, [det])  # must not raise
 
     def test_draw_multiple_detections_does_not_raise(self, viz, blank_image):
         dets = [
-            Detection(class_id=0, confidence=0.9, bbox=(50.0, 50.0, 40.0, 30.0)),
-            Detection(class_id=2, confidence=0.6, bbox=(220.0, 150.0, 60.0, 50.0)),
+            Detection(class_id=0, confidence=0.9, bbox=(30.0, 35.0, 70.0, 65.0)),
+            Detection(class_id=2, confidence=0.6, bbox=(190.0, 125.0, 250.0, 175.0)),
         ]
         viz.draw_detections(blank_image, dets)
         assert blank_image.any()
@@ -44,5 +44,5 @@ class TestVisualizerSmoke:
     def test_custom_colour_map_is_accepted(self, blank_image):
         colours = [(255, 0, 0), (0, 255, 0)]
         viz = Visualizer(class_names=["a", "b"], colour_map=colours)
-        det = Detection(class_id=1, confidence=0.7, bbox=(100.0, 100.0, 50.0, 50.0))
+        det = Detection(class_id=1, confidence=0.7, bbox=(75.0, 75.0, 125.0, 125.0))
         viz.draw_detections(blank_image, [det])  # must not raise

@@ -31,7 +31,7 @@ source .venv/bin/activate   # Linux/macOS
 detect --input-image horse.jpg
 ```
 
-By default the command reads from the configured input folder and writes results next to the input file with a `_detections` suffix.
+By default the command reads from the configured input folder and writes results in the data/output folder with a `_detections` suffix.
 
 ### Development
 
@@ -59,6 +59,17 @@ uv run pytest
 - Pre-processing time : 14.318 ms
 - Inference time : 1357.630 ms
 - Post-processing time : 2.294 ms
+
+### TODOs
+
+
+- [ ] add batch processing for multiple images
+- [ ] add functionality for video file as input
+- [ ] add per-class confidence thresholds (and `--confidence` CLI override)
+- [ ] add JSON export of detections (`--output-json`)
+- [ ] support arbitrary input paths and `--input-dir` for folder input
+- [ ] add model auto-download helper (avoids manual HF step)
+- [ ] add a Tracker to the project
 
 ### References
 

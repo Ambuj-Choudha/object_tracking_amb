@@ -13,6 +13,7 @@ object_tracker_amb.egg-info/
 
 # input & output images folder
 *.jpg
+!docs/*.jpg
 
 # model files
 *.onnx

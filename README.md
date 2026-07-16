@@ -14,6 +14,15 @@ uv sync
 
 This installs all dependencies from `uv.lock` and creates a `.venv` automatically.
 
+### Download the model
+
+After setting up the environment, to automatically download the model, just run the command below:
+
+```bash
+uv run download-model
+```
+This would download model from hugging face model repository.
+
 ### Usage
 
 After `uv sync`, a `detect` command is available in the environment:

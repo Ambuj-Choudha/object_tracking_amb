@@ -32,6 +32,7 @@ dev = [
 
 [project.scripts]
 detect = "object_tracker.detect:main"
+download-model = "object_tracker.download_model:main"
 
 [tool.setuptools]
 packages = ["object_tracker"]

@@ -1,6 +1,6 @@
 import os
 import onnxruntime as ort
-from ..object_tracker import config
+from object_tracker import config
 
 def main():
     session = ort.InferenceSession(config.ONNX_MODEL)

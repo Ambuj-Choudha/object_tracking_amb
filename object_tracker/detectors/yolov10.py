@@ -7,7 +7,7 @@ from object_tracker.types import Detection
 
 
 class YOLOv10DetectorONNX(DetectorBase):
-def __init__(self, onnx_model: str, confidence_threshold: float | None = None) -> None:
+    def __init__(self, onnx_model: str, confidence_threshold: float | None = None) -> None:
         self.confidence_threshold = 0.5 if confidence_threshold is None else confidence_threshold
 
         available = ort.get_available_providers()
